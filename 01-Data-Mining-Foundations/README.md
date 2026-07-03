@@ -57,7 +57,3 @@ Only after answering these questions should modeling begin.
 My main takeaway is:
 
 > Data mining is not about forcing an algorithm onto a dataset. It is about turning data into reliable and useful knowledge for a clearly defined purpose.
-
-## How I would explain it in an interview
-
-Data mining is the process of discovering useful patterns and relationships in data. It includes problem understanding, data preparation, modeling, evaluation, and interpretation. The algorithm only works with numerical or encoded patterns, while humans provide the business meaning and decide whether the result is useful.
