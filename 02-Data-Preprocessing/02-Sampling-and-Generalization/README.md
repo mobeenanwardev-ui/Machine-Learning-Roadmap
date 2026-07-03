@@ -39,7 +39,3 @@ Quality and coverage are as important as quantity.
 ## Main lesson
 
 > A model can only learn from the situations included in its data. If the sample does not represent reality, the model will not reliably generalize to reality.
-
-## How I would explain it in an interview
-
-I would check whether the training sample covers the population and operating conditions where the model will be used. I would look for sampling bias, class imbalance, time effects, and missing groups. A large dataset is useful only when it is relevant and representative.
