@@ -38,7 +38,3 @@ The scaler must be fitted on the training data only. The same learned mean, stan
 ## Main lesson
 
 > Scaling does not make a feature more important. It prevents the unit or numerical range from deciding its influence in algorithms that are sensitive to scale.
-
-## How I would explain it in an interview
-
-I scale features when the algorithm depends on distances, gradients, or variance. I fit the scaler only on training data and apply the same transformation to unseen data. For tree-based models, scaling is usually unnecessary.
