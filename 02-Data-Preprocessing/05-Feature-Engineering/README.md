@@ -39,7 +39,3 @@ These ideas are related but not identical.
 ## Main lesson
 
 > Feature engineering is where domain understanding is translated into a form that a model can learn from.
-
-## How I would explain it in an interview
-
-I use feature engineering to represent the business problem more directly. I create features only when they have a logical meaning, avoid using future information, and validate whether the new features actually improve performance on unseen data.
