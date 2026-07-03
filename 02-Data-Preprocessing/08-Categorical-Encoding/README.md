@@ -29,7 +29,3 @@ A real system may receive a category that was not present during training. The p
 ## Main lesson
 
 > Encoding should turn categories into a useful numerical form without inventing a false relationship between them.
-
-## How I would explain it in an interview
-
-I use one-hot encoding for unordered categories with manageable cardinality and ordinal encoding when a true order exists. For high-cardinality data, I consider other encodings and check memory use, leakage, and unseen categories.
