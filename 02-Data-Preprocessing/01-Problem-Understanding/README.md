@@ -1,62 +1,96 @@
 # Problem Understanding and Domain Knowledge
 
-## What I understood
+## Why this comes before coding
 
-Before touching the data, I first need to understand the actual problem. This sounds obvious, but it is easy to skip. A model can be technically accurate and still be useless if it solves the wrong problem.
+Before touching the data, I first need to understand the actual problem. A model can be technically accurate and still be useless when it answers the wrong question.
 
-For example, a factory may say, "We want to use machine learning for maintenance." That statement is too broad. I would need to ask:
+A factory may say, “We want to use machine learning for maintenance.” This is too broad because it can mean different things:
 
-- Do we want to predict whether a machine will fail?
-- Do we want to predict how many hours are left before failure?
-- Do we want to detect abnormal sensor behaviour?
-- How early must the warning come?
-- What is more expensive: a false alarm or a missed failure?
+| Possible goal | Type of task |
+|---|---|
+| Predict whether a machine will fail in the next 24 hours | Classification |
+| Predict the remaining hours before failure | Regression |
+| Detect unusual sensor behaviour | Anomaly detection |
+| Group machines with similar behaviour | Clustering |
 
-These questions change the whole project. They affect the target variable, the data we need, the model type, and the evaluation metric.
+The goal changes the target, the features, the model, and the evaluation method.
+
+## Turning the real problem into a data problem
+
+A useful problem needs a clear input, output, time frame, and success measure.
+
+| Part | Example definition |
+|---|---|
+| Business problem | Reduce unexpected machine downtime |
+| Prediction question | Will this machine fail within 24 hours? |
+| Input | Sensor readings from the previous hour |
+| Target | Failure within 24 hours: yes or no |
+| Important mistake | Missing a real failure |
+| Useful measure | Recall for the failure class |
+
+This is much clearer than simply saying “predict failure.” It tells us what the model should learn and when the prediction must be available.
+
+## Why the cost of mistakes matters
+
+Not every wrong prediction has the same effect.
+
+| Actual situation | Prediction | Practical result |
+|---|---|---|
+| Failure | Failure | Correct warning |
+| Normal | Normal | Correct decision |
+| Normal | Failure | Unnecessary inspection |
+| Failure | Normal | Real failure is missed |
+
+In a factory, a missed failure may cost much more than an unnecessary inspection. Therefore, accuracy alone may not describe whether the model is useful.
 
 ## Why domain knowledge is necessary
 
-The computer does not understand what temperature, pressure, customer satisfaction, or machine failure means. It only sees columns and values.
+The computer does not understand temperature, pressure, customer satisfaction, or failure. It only sees columns and values. Domain knowledge gives the numbers meaning.
 
-Domain knowledge gives those values meaning. A manufacturing engineer may know that a pressure reading is impossible, while a data analyst may only see it as a large number. A doctor may know that two measurements should be interpreted together. A bank expert may know that a certain variable cannot legally be used in a decision.
+| Value | Without domain knowledge | With domain knowledge |
+|---|---|---|
+| Pressure = 500 | A large value | Impossible for this machine |
+| Temperature = 75 °C | A number | Dangerous for this motor type |
+| Sensor value = 0 | A low reading | Sensor may be disconnected |
+| Repair status = completed | A useful-looking feature | Information created after failure |
 
-This means domain knowledge helps with:
+Domain knowledge helps identify useful features, impossible values, unreliable labels, missing-data reasons, and information that would not be available at prediction time.
 
-- choosing useful features,
-- identifying impossible values,
-- understanding missing data,
-- defining the correct target,
-- avoiding misleading conclusions,
-- and deciding whether the model output is practically useful.
+## Example with 500 sensors
 
-## Example: predictive maintenance
+Suppose a factory gives me data from 500 sensors. I should not immediately use every column. I first need to ask:
 
-Suppose I have data from 500 sensors and a column called `machine_failed`.
+1. What does each sensor measure?
+2. Are several sensors measuring almost the same behaviour?
+3. How often is each sensor recorded?
+4. Are all sensors available on every machine?
+5. Does any feature appear only after the failure?
+6. Are the failure labels reliable?
 
-I should not immediately use all 500 sensors. First, I would try to understand:
+A simple check might look like this:
 
-- what each sensor measures,
-- how often it records data,
-- whether some sensors are duplicates,
-- whether any sensor is only activated after a failure,
-- and whether the failure label is reliable.
+| Feature | Meaning | Available before failure? | Decision |
+|---|---|---|---|
+| Temperature | Motor heat | Yes | Consider using |
+| Vibration | Mechanical movement | Yes | Consider using |
+| Repair completed | Repair status | No | Remove from prediction data |
+| Machine ID | Identifier | Yes | Check whether it adds real information |
 
-A sensor that turns on only after the machine has already failed could give excellent model accuracy, but it would be useless for prediction. This would also create data leakage.
+The repair feature could produce high accuracy, but it cannot help predict an event that has already happened.
 
-## Converting the business problem into a data problem
+## Questions to answer before modeling
 
-A useful machine-learning problem should have a clear input and output.
-
-Example:
-
-- **Business problem:** Reduce unexpected machine downtime.
-- **Data problem:** Predict whether a machine will fail within the next 24 hours using sensor readings from the previous hour.
-- **Input features:** temperature, vibration, pressure, motor current, machine age.
-- **Target:** failure within 24 hours: yes or no.
-- **Success measure:** high recall, because missing a real failure may be very costly.
-
-This step makes the project measurable.
+| Area | Main question |
+|---|---|
+| Objective | What exactly should be predicted or discovered? |
+| User | Who will use the output? |
+| Timing | When must the result be available? |
+| Data | Which information exists at that time? |
+| Errors | Which wrong decision costs more? |
+| Success | Which measure shows practical value? |
 
 ## Main lesson
 
 > Good machine learning starts with a clear real-world question, not with a model.
+
+A reliable solution must answer the right question using information that is genuinely available when the prediction is made.
