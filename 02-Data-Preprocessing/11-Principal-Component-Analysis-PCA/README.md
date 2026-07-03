@@ -1,59 +1,155 @@
 # Principal Component Analysis (PCA)
 
-## What I understood
+## Why PCA exists
 
-PCA is a dimensionality-reduction technique. It does not simply choose a few original columns. It creates new features called principal components by combining the original numerical features.
+PCA is a dimensionality-reduction technique. It is useful when a dataset has many numerical features and several of them contain overlapping information.
 
-The computer does not understand that a column represents height, weight, pressure, or shoe size. It only sees numbers. PCA looks at how those numerical columns vary together.
+PCA does not simply choose a few original columns. It creates new features called **principal components** by combining the original features.
 
-If two or more features often increase and decrease together, they may contain overlapping information. PCA tries to represent that shared variation with fewer new components.
+## A simple example
 
-## How PCA decides what to keep
+Suppose we record height, weight, and shoe size:
 
-PCA searches for directions in the data that contain the greatest variance.
+| Person | Height (cm) | Weight (kg) | Shoe size |
+|---|---:|---:|---:|
+| A | 165 | 60 | 39 |
+| B | 172 | 70 | 42 |
+| C | 180 | 82 | 44 |
+| D | 188 | 91 | 46 |
 
-- **PC1** is the direction containing the largest amount of variation.
-- **PC2** captures the largest remaining variation while being independent of PC1.
-- Further components continue in the same way.
+These features often increase together. They are not identical, but they contain related information about body size.
 
-Each principal component is a weighted combination of the original features.
+PCA may combine them into a new component:
 
-For example, a component could look conceptually like:
+`PC1 = 0.58 × height + 0.56 × weight + 0.59 × shoe size`
 
-`PC1 = 0.6 × height + 0.5 × weight + 0.4 × shoe_size`
+The exact weights are learned from the data. PC1 could be interpreted loosely as an overall body-size direction, although PCA itself does not understand that meaning.
 
-The exact weights are calculated from the data.
+## What the computer actually sees
 
-## What PCA does not know
+The computer does not understand height, weight, or shoe size. It only sees numerical columns:
 
-PCA is unsupervised. It does not look at the target variable while finding components.
+| X1 | X2 | X3 |
+|---:|---:|---:|
+| 165 | 60 | 39 |
+| 172 | 70 | 42 |
+| 180 | 82 | 44 |
 
-This creates an important limitation: the direction with the most variance is not always the direction that is most useful for prediction.
+PCA asks:
 
-A low-variance feature might be highly important for detecting a rare failure. PCA could reduce or remove part of that information because it only focuses on variance, not business importance or target relevance.
+- Which columns change together?
+- In which direction is the data spread the most?
+- Can that variation be represented with fewer new columns?
+
+It does not need the column names to perform the calculation.
+
+## Principal components
+
+The components are ordered by the amount of variance they explain.
+
+| Component | Meaning |
+|---|---|
+| PC1 | Direction containing the most variation |
+| PC2 | Largest remaining variation, independent of PC1 |
+| PC3 | Next remaining variation |
+
+Suppose the explained variance is:
+
+| Component | Explained variance | Cumulative variance |
+|---|---:|---:|
+| PC1 | 72% | 72% |
+| PC2 | 20% | 92% |
+| PC3 | 8% | 100% |
+
+Keeping PC1 and PC2 would reduce three features to two while preserving 92% of the variation.
+
+## PCA creates new features
+
+Before PCA:
+
+| Temperature | Pressure | Vibration | Current |
+|---:|---:|---:|---:|
+| Original feature | Original feature | Original feature | Original feature |
+
+After PCA:
+
+| PC1 | PC2 |
+|---:|---:|
+| Combination of all original features | Another combination of all original features |
+
+This is different from feature selection.
+
+| Method | What it does |
+|---|---|
+| Feature selection | Keeps some original columns |
+| PCA | Creates new combined columns |
 
 ## Why scaling usually comes first
 
-If one feature is measured in very large units, it can dominate the variance. For this reason, numerical features are commonly standardized before PCA when their scales are different.
+Suppose one feature is measured in euros and another between 0 and 1:
 
-The scaler and PCA must both be fitted on training data only. Validation and test data are transformed using the same fitted objects.
+| Feature | Typical range |
+|---|---:|
+| Annual revenue | 100,000 to 5,000,000 |
+| Defect rate | 0.01 to 0.20 |
+
+Without scaling, revenue may dominate the variance only because its numbers are much larger. Standardization gives features a comparable scale before PCA.
+
+## Important limitation: variance is not the same as usefulness
+
+PCA is unsupervised. It does not look at the target variable.
+
+Suppose a rare sensor changes only slightly, but that small change is strongly connected to failure. Because the feature has low variance, PCA may reduce part of its information.
+
+| Feature | Variance | Importance for failure prediction |
+|---|---:|---|
+| Sensor A | High | Low |
+| Sensor B | Low | High |
+
+PCA may favour Sensor A because it has higher variance, even though Sensor B is more useful for the target.
+
+That is why PCA must be tested rather than trusted automatically.
+
+## Example with 500 sensors
+
+If 500 sensors contain many related signals, PCA may reduce them to a smaller number of components.
+
+| Before PCA | After PCA |
+|---|---|
+| 500 sensor columns | 20 principal components |
+| High memory and computation | Faster training |
+| Many correlated features | Components are uncorrelated |
+| Original features are easy to name | Components are harder to interpret |
+
+The model should be compared with and without PCA to check whether accuracy, speed, or stability improves.
+
+## Correct data flow
+
+1. Split the data.
+2. Fit the scaler on training features.
+3. Transform training, validation, and test features with that scaler.
+4. Fit PCA on the scaled training features.
+5. Transform validation and test features with the same PCA object.
+
+PCA should not be fitted on the complete dataset before splitting because that would allow test information to influence the components.
 
 ## When PCA may help
 
-PCA may be useful when:
+- many numerical features,
+- strongly related features,
+- slow model training,
+- noisy or redundant data,
+- or two-dimensional visualization.
 
-- there are many numerical features,
-- several features are strongly related,
-- training is slow,
-- noise or redundancy is present,
-- or the data needs to be reduced to two or three dimensions for visualization.
+## When PCA may not help
 
-## Limitations
-
-PCA can make interpretation harder because the new components are mixtures of original features. It can also reduce model performance if important predictive information is lost.
-
-Therefore, I should not use PCA automatically. I should compare model performance with and without PCA and inspect the explained variance.
+- only a few features,
+- original features must remain easy to explain,
+- low-variance features contain important target information,
+- or the model already handles the original dimensions well.
 
 ## Main lesson
 
-> PCA preserves directions of high variation, not necessarily the features that are most important for the target.
+> PCA keeps directions with high variation, not necessarily the features that are most important for the prediction target.
+
+It is a useful tool, but the final decision should come from validation results and domain understanding.
