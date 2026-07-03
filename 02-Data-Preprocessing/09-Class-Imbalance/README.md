@@ -43,7 +43,3 @@ These methods should be applied only to the training data. The validation and te
 ## Main lesson
 
 > A high accuracy score does not prove that an imbalanced classifier is useful. I must check whether it can recognize the rare class that actually matters.
-
-## How I would explain it in an interview
-
-I first inspect the class distribution and define which mistakes are most costly. Then I use metrics such as recall, precision, F1-score, and the confusion matrix rather than relying only on accuracy. Any resampling is performed only on the training set.
