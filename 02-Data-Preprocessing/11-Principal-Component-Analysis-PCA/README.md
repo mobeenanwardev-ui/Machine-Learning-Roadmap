@@ -57,7 +57,3 @@ Therefore, I should not use PCA automatically. I should compare model performanc
 ## Main lesson
 
 > PCA preserves directions of high variation, not necessarily the features that are most important for the target.
-
-## How I would explain it in an interview
-
-PCA transforms correlated numerical features into a smaller set of uncorrelated principal components. The components are ordered by explained variance. I usually standardize features first, fit PCA only on training data, and validate whether the reduced representation actually improves the final model.
