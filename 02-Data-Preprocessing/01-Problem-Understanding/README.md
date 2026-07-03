@@ -60,7 +60,3 @@ This step makes the project measurable.
 ## Main lesson
 
 > Good machine learning starts with a clear real-world question, not with a model.
-
-## How I would explain it in an interview
-
-I would first clarify the business objective, the prediction target, the cost of different errors, and how the output will be used. Then I would work with domain experts to understand the meaning and quality of the data. This prevents building a technically correct model that solves the wrong problem.
