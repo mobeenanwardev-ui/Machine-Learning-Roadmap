@@ -1,56 +1,94 @@
 # Data Leakage and Overfitting
 
-## What I understood
+## Two different reasons a model can fail
 
-Data leakage happens when information that should not be available during training accidentally enters the model-building process. It can make the results look excellent even though the model will fail in real use.
+A model can look successful during development and still fail in real use. Two common reasons are **data leakage** and **overfitting**.
 
-Overfitting is different. It happens when the model learns the training data too closely, including noise and special cases, instead of learning a pattern that generalizes.
+| Problem | What happens |
+|---|---|
+| Data leakage | The model receives information it should not have |
+| Overfitting | The model learns the training data too specifically |
 
-## A leakage example
+These problems can both create misleading results, but they are not the same.
 
-Suppose I want to predict whether a customer will cancel a subscription. My dataset contains a column called `cancellation_date`.
+## Data leakage
 
-That column gives away the answer. It may produce very high accuracy, but it would not be available before the customer cancels. The model is not predicting the future; it is indirectly reading the result.
+Data leakage happens when information from outside the proper training process influences the model.
 
-Leakage can also happen during preprocessing. For example, this is wrong:
+### Example: predicting subscription cancellation
 
-1. calculate the mean using the full dataset,
-2. fill missing values,
-3. scale all records,
-4. apply PCA,
-5. and only then split into train and test data.
+Suppose the goal is to predict whether a customer will cancel next month.
 
-The test data has already influenced the mean, scale, and PCA directions.
+| Feature | Available before cancellation? | Safe to use? |
+|---|---|---|
+| Number of logins | Yes | Yes |
+| Support complaints | Yes | Yes |
+| Cancellation date | No | No |
+| Final refund amount | No | No |
 
-The correct order is:
+The cancellation date may make prediction easy, but it only exists after cancellation. The model would be reading the answer instead of predicting it.
 
-1. split the data,
-2. fit preprocessing steps only on the training set,
-3. apply the learned transformations to validation and test data.
+### Leakage during preprocessing
 
-## Overfitting example
+This order is wrong:
 
-A very flexible model may memorize unusual details from the training data. It can achieve 99% training accuracy but much lower test accuracy.
+1. Fill missing values using the complete dataset.
+2. Scale all records.
+3. Apply PCA.
+4. Split into training and test data.
 
-Common signs include:
+The test set has already influenced the training process.
 
-- a large gap between training and validation performance,
-- validation performance becoming worse while training improves,
-- or a model that changes strongly when the training sample changes.
+The safer order is:
 
-Possible responses include collecting more representative data, simplifying the model, applying regularization, reducing unnecessary features, or using cross-validation.
+1. Split the data.
+2. Fit imputation, scaling, and PCA only on training data.
+3. Apply the learned transformations to validation and test data.
+
+| Preprocessing step | Learn from | Apply to |
+|---|---|---|
+| Median imputation | Training set | Train, validation, test |
+| Standardization | Training set | Train, validation, test |
+| PCA components | Training set | Train, validation, test |
+
+## Overfitting
+
+Overfitting happens when the model learns noise and special details from the training set.
+
+| Model | Training accuracy | Validation accuracy | Interpretation |
+|---|---:|---:|---|
+| Model A | 99% | 72% | Probably overfitting |
+| Model B | 91% | 88% | Better generalization |
+
+Model A looks stronger if I only check training accuracy, but Model B is more useful on new data.
+
+## Why overfitting happens
+
+Common reasons include:
+
+- a model that is too complex,
+- too many features compared with the number of observations,
+- noisy data,
+- too little training data,
+- or training for too long.
+
+Possible responses include:
+
+- collecting more representative data,
+- simplifying the model,
+- removing irrelevant features,
+- using regularization,
+- and checking performance with cross-validation.
 
 ## Main difference
 
-- **Leakage:** the model receives information it should not have.
-- **Overfitting:** the model learns the available training data too specifically.
-
-Both can create misleading performance, but the causes are different.
+| Question | Data leakage | Overfitting |
+|---|---|---|
+| Did forbidden information enter training? | Yes | Not necessarily |
+| Did the model memorize training details? | Not necessarily | Yes |
+| Can the score look unrealistically high? | Yes | Yes |
+| Main prevention | Correct data pipeline | Better model control and validation |
 
 ## Main lesson
 
-> A strong score is not automatically trustworthy. I must check how the data was created, split, and transformed before believing the result.
-
-## How I would explain it in an interview
-
-I prevent leakage by separating the test data early and fitting all preprocessing only on training data, preferably inside a pipeline. I detect overfitting by comparing training and validation performance and checking whether the model generalizes across different splits.
+> A strong score is not automatically trustworthy. I must check both the data pipeline and the difference between training and validation performance.
