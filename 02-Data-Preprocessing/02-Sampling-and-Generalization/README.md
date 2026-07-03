@@ -1,40 +1,91 @@
 # Sampling and Generalization
 
-## What I understood
+## Population and sample
 
-Usually, we cannot collect data from every person, machine, transaction, or event in the real world. Instead, we work with a sample and hope that what we learn from it also works on the larger population.
+In most real problems, I cannot collect data from every person, machine, transaction, or event. The complete group is called the **population**, while the smaller part used for analysis is called the **sample**.
 
-The sample size matters, but size alone is not enough. A very large biased sample can still produce a bad model.
+| Term | Meaning | Example |
+|---|---|---|
+| Population | Every case I want to make conclusions about | All university students in Germany |
+| Sample | The cases available in my dataset | 2,000 students who completed a survey |
+| Representative sample | A sample that reflects important differences in the population | Students from different cities, subjects, ages, and study levels |
 
-For example, if I want to build a model for all university students but collect data only from computer-science students, the sample may be large but not representative. The model may learn patterns that do not apply to students from other subjects.
+The goal is to learn something from the sample that also works for the population.
 
-## Population, sample, and representativeness
+## Why a large sample can still be bad
 
-- **Population:** the full group I want to make conclusions about.
-- **Sample:** the smaller group actually present in my dataset.
-- **Representative sample:** a sample that contains the important variation of the population.
+Sample size matters, but size alone is not enough.
 
-A representative sample should cover relevant differences such as age groups, locations, machine types, seasons, operating conditions, or customer categories.
+Suppose I want to understand all university students, but I collect data only from computer-science students:
+
+| Subject | Students in population | Students in sample |
+|---|---:|---:|
+| Computer Science | 20% | 100% |
+| Business | 25% | 0% |
+| Engineering | 25% | 0% |
+| Social Sciences | 30% | 0% |
+
+Even if the sample contains 50,000 students, it is still biased. It does not represent the full population.
+
+This taught me that **10,000 biased observations can be worse than 1,000 representative observations**.
 
 ## Generalization
 
-Generalization means that a model performs well on new examples that were not used during training.
+Generalization means that a model works well on new cases that were not used during training.
 
-A model that performs perfectly on training data but badly on new data has not learned the general pattern. It has learned details specific to the training sample.
+Consider a machine-failure model trained only during winter:
 
-Suppose a failure-prediction model is trained only with winter data. It may fail during summer because temperature and operating conditions are different. The model may look accurate during development, but the sample did not represent the real environment.
+| Training conditions | Real deployment conditions |
+|---|---|
+| Low room temperature | Summer heat |
+| Normal workload | Peak production workload |
+| One machine model | Several machine models |
+| Mostly new machines | New and old machines |
 
-## Does more data always help?
+The model may perform well during development but fail after deployment because it never learned the missing situations.
 
-More relevant and representative data usually helps. However, simply adding more records does not automatically solve:
+A model can only learn from the variation present in its data.
 
-- biased sampling,
+## More data does not automatically fix everything
+
+Adding more records is helpful when the new data improves coverage and quality. It does not automatically solve:
+
 - incorrect labels,
 - duplicated observations,
-- outdated data,
-- or missing important situations.
+- outdated records,
+- missing groups,
+- measurement errors,
+- or sampling bias.
 
-Quality and coverage are as important as quantity.
+For example:
+
+| Dataset change | Likely benefit |
+|---|---|
+| Add 100,000 duplicated records | Very little |
+| Add summer operating data | Better seasonal coverage |
+| Add examples from older machines | Better machine-age coverage |
+| Add records with incorrect failure labels | May make learning worse |
+
+## Random sampling is not always enough
+
+Different datasets need different sampling strategies.
+
+| Situation | Better approach |
+|---|---|
+| Rare failure cases | Stratified sampling to preserve class ratios |
+| Time-series data | Keep older data before newer data |
+| Several records from one patient | Keep each patient in only one split |
+| Different machine models | Make sure all important models are represented |
+
+The sampling method should match the structure of the real problem.
+
+## Questions I should ask
+
+1. Which population should this model work for?
+2. Which groups or conditions are missing from the dataset?
+3. Is the class distribution realistic?
+4. Does the data cover different seasons, locations, machine types, or customer groups?
+5. Was the sample collected in a way that favours some cases over others?
 
 ## Main lesson
 
