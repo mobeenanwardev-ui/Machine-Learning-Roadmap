@@ -34,7 +34,3 @@ Possible solutions include:
 ## Main lesson
 
 > More features do not automatically mean more useful information. The important question is how much independent and relevant information they contain.
-
-## Interview explanation
-
-As dimensionality increases, observations become sparse and distance measures may lose meaning. I reduce irrelevant or redundant variables and validate whether feature selection or dimensionality reduction improves performance on unseen data.
