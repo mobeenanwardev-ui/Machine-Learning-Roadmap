@@ -62,7 +62,3 @@ In practical Python work, tools such as a scikit-learn `Pipeline` help keep prep
 ## Main lesson
 
 > A reliable model depends not only on the algorithm, but also on a correct and repeatable preprocessing process.
-
-## How I would explain it in an interview
-
-I split the data early, fit all preprocessing only on the training set, and apply the learned transformations unchanged to validation and test data. I select preprocessing steps according to the feature types and model, then validate the complete pipeline on unseen data.
