@@ -1,41 +1,107 @@
 # Missing Values
 
-## What I understood
+## What a missing value really means
 
-Missing values are not just empty cells. They can tell us something about how the data was collected.
+A missing value is not only an empty cell. It may tell us something about how the data was collected.
 
-A value may be missing because a sensor failed, a customer skipped a question, a measurement was not required, or the information did not exist at that time. Before filling anything, I should understand why it is missing.
+A value can be missing because:
+
+- a sensor stopped working,
+- a customer skipped a question,
+- a measurement was not required,
+- the information did not exist at that time,
+- or a data-transfer problem occurred.
+
+Before filling the value, I should first understand why it is missing.
+
+## Simple example
+
+| Customer | Age | Monthly income | Purchased |
+|---|---:|---:|---|
+| A | 24 | 2,200 | Yes |
+| B | 31 | missing | No |
+| C | missing | 3,100 | Yes |
+| D | 45 | 4,600 | No |
+
+The missing age and missing income may have different causes, so they do not necessarily need the same treatment.
 
 ## Common strategies
 
-### Remove rows or columns
+### 1. Remove rows
 
-Deleting can be reasonable when only a very small number of rows are affected and the missingness is not important. Removing an entire column may make sense when most values are missing and the feature is not essential.
+This may be reasonable when very few rows are affected.
 
-The danger is losing useful information or introducing bias. For example, if a certain customer group is more likely to leave a field empty, deleting those rows can make that group disappear from the dataset.
+| Situation | Decision |
+|---|---|
+| 3 missing rows out of 100,000 | Removing them may be acceptable |
+| 4,000 missing rows out of 10,000 | Removing them may destroy too much information |
 
-### Mean imputation
+Removing rows can also create bias. For example, if low-income customers are more likely to leave the income field empty, deleting those rows may remove an important group.
 
-The mean is simple, but it is sensitive to extreme values. It can also create an artificial concentration around the average.
+### 2. Remove a column
 
-### Median imputation
+This may make sense when most values are missing and the feature is not important.
 
-The median is often safer for skewed numerical data or data containing outliers.
+| Feature | Missing percentage | Possible action |
+|---|---:|---|
+| Age | 2% | Keep and handle missing values |
+| Optional comment | 92% | Possibly remove |
 
-### Most frequent value
+### 3. Mean imputation
 
-This can be used for categorical features, but it may over-represent the most common category.
+The mean uses the average value.
 
-### Missing indicator
+For values `20, 22, 24, 26`, the mean is `23`.
 
-Sometimes the fact that a value is missing is itself useful. In that case, I can add a separate yes/no column such as `income_was_missing`.
+The mean is simple, but it is sensitive to extreme values.
 
-## Important leakage rule
+### 4. Median imputation
 
-The imputation value must be learned from the training set only.
+For values `20, 22, 24, 100`, the mean is `41.5`, while the median is `23`.
 
-For example, I calculate the training-set median and then use that same median for validation and test data. I should not calculate a new median from the test set.
+| Method | Replacement value |
+|---|---:|
+| Mean | 41.5 |
+| Median | 23 |
+
+The median is often more suitable for skewed data or data containing outliers.
+
+### 5. Most frequent category
+
+For a categorical feature such as city, the most common city can be used. This is simple, but it may make the largest category even more dominant.
+
+### 6. Add a missing indicator
+
+Sometimes the fact that a value is missing is useful.
+
+| Income | income_was_missing |
+|---:|---:|
+| 2,200 | 0 |
+| filled with median | 1 |
+
+This allows the model to use both the replacement value and the fact that the original information was absent.
+
+## Important rule: fit on training data only
+
+Suppose the training-set median income is 3,000 and the test-set median is 4,500. I should use the training median for both sets.
+
+| Dataset | Median used for imputation |
+|---|---:|
+| Training | 3,000 |
+| Validation | 3,000 |
+| Test | 3,000 |
+
+Using the test-set median would allow test information to influence preprocessing.
+
+## Questions to ask before choosing a method
+
+1. How much data is missing?
+2. Is the missingness random or connected to a group?
+3. Is the feature important?
+4. Does the feature contain outliers?
+5. Will removing data change the population?
+6. Could a missing indicator contain useful information?
 
 ## Main lesson
 
-> There is no universally correct missing-value strategy. The decision depends on why the value is missing, how much data is affected, and how the chosen method changes the distribution.
+> There is no single best strategy for missing values. The correct choice depends on the cause, amount, distribution, and meaning of the missing data.
