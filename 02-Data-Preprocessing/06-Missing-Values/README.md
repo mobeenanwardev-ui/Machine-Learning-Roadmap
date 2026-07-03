@@ -39,7 +39,3 @@ For example, I calculate the training-set median and then use that same median f
 ## Main lesson
 
 > There is no universally correct missing-value strategy. The decision depends on why the value is missing, how much data is affected, and how the chosen method changes the distribution.
-
-## How I would explain it in an interview
-
-I first investigate the amount and pattern of missingness. Then I choose deletion, imputation, or a missing indicator based on the feature and domain. I fit the imputer only on training data and validate whether the strategy improves the model without creating bias.
