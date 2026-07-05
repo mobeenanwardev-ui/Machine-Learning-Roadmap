@@ -6,7 +6,14 @@ The goal of this repository is to document not only how techniques are used, but
 
 ## Current learning areas
 
-- Data mining foundations
+### 1. [Data Mining Foundations](./01-Data-Mining-Foundations/)
+
+- Difference between data, information, and knowledge
+- Common data-mining tasks
+- Importance of domain knowledge
+
+### 2. [Data Preprocessing](./02-Data-Preprocessing/)
+
 - Problem and domain understanding
 - Sampling and generalization
 - Train, validation, and test splitting
@@ -15,8 +22,27 @@ The goal of this repository is to document not only how techniques are used, but
 - Missing-value handling
 - Feature scaling
 - Categorical encoding
+- Class imbalance
 - Curse of dimensionality
 - Principal Component Analysis
 - Complete preprocessing workflow
 
-Practical notebooks, Python scripts, visualizations, and interview-focused explanations will be added as the roadmap develops.
+### 3. [Decision Tree Classification and Model Evaluation](./03-Decision-Tree-Classification-and-Model-Evaluation/)
+
+- Complete Titanic classification workflow
+- Decision Tree Classifier
+- Class predictions and prediction probabilities
+- Confusion Matrix
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- Classification Report
+- ROC Curve and AUC
+- Decision-threshold comparison
+
+This section also contains a complete executable Python pipeline:
+
+- [`titanic_decision_tree_pipeline.py`](./03-Decision-Tree-Classification-and-Model-Evaluation/titanic_decision_tree_pipeline.py)
+
+More practical notebooks, Python scripts, visualizations, and machine-learning topics will be added as the roadmap develops.
