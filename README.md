@@ -41,8 +41,9 @@ The goal of this repository is to document not only how techniques are used, but
 - ROC Curve and AUC
 - Decision-threshold comparison
 
-This section also contains a complete executable Python pipeline:
+This section contains two executable Python versions:
 
-- [`titanic_decision_tree_pipeline.py`](./03-Decision-Tree-Classification-and-Model-Evaluation/titanic_decision_tree_pipeline.py)
+- [`titanic_decision_tree_beginner.py`](./03-Decision-Tree-Classification-and-Model-Evaluation/titanic_decision_tree_beginner.py) — simple, top-to-bottom beginner version with direct explanations and manual metric calculations.
+- [`titanic_decision_tree_pipeline.py`](./03-Decision-Tree-Classification-and-Model-Evaluation/titanic_decision_tree_pipeline.py) — more structured and advanced version using reusable functions.
 
 More practical notebooks, Python scripts, visualizations, and machine-learning topics will be added as the roadmap develops.
