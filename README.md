@@ -91,4 +91,24 @@ Files:
 - [`README.md`](./05-LLMs-and-RAG/README.md) — LLM theory, RAG concepts, practical workflow, outputs, and exam cheat sheet.
 - [`rag_pipeline.py`](./05-LLMs-and-RAG/rag_pipeline.py) — executable open-source RAG pipeline based on the course exercise.
 
+### 6. [Linear Regression](./06-Linear-Regression/)
+
+- Linear Regression intuition and model equation
+- Features, target, weights, and bias
+- Model fitting and Linear Regression assumptions
+- Loss versus cost / objective functions
+- Mean Squared Error and the quadratic cost surface
+- Gradient and Gradient Descent using a human hill/valley analogy
+- Learning rate and convergence
+- Multiple parameters, partial derivatives, and chain-rule intuition
+- Convex versus non-convex optimization
+- Polynomial Regression
+- Ridge, Lasso, and Elastic Net regularization
+- Scikit-learn and from-scratch Gradient Descent examples
+- Exam-style questions and a compact revision cheat sheet
+
+Files:
+
+- [`README.md`](./06-Linear-Regression/README.md) — concept-first Linear Regression and Gradient Descent study guide designed for fast exam revision.
+
 More practical notebooks, Python scripts, visualizations, and machine-learning topics will be added as the roadmap develops.
