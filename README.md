@@ -46,4 +46,23 @@ This section contains two executable Python versions:
 - [`titanic_decision_tree_beginner.py`](./03-Decision-Tree-Classification-and-Model-Evaluation/titanic_decision_tree_beginner.py) — simple, top-to-bottom beginner version with direct explanations and manual metric calculations.
 - [`titanic_decision_tree_pipeline.py`](./03-Decision-Tree-Classification-and-Model-Evaluation/titanic_decision_tree_pipeline.py) — more structured and advanced version using reusable functions.
 
+### 4. [Explainability and Causality](./04-Explainability-and-Causality/)
+
+- Why model explainability matters
+- Global versus local explanations
+- Inherent versus post-hoc explainability
+- Random Forest MDI / Gini feature importance
+- Permutation Feature Importance
+- SHAP / Shapley values
+- Global SHAP importance
+- SHAP beeswarm interpretation
+- Predictive importance versus causality
+- Causal inference, counterfactuals, interventions, and confounders
+- Titanic explainability workflow with recorded exercise outputs
+
+Files:
+
+- [`README.md`](./04-Explainability-and-Causality/README.md) — concepts, code snippets, interpretation, and recorded exercise outputs.
+- [`titanic_explainability.py`](./04-Explainability-and-Causality/titanic_explainability.py) — executable Python version.
+
 More practical notebooks, Python scripts, visualizations, and machine-learning topics will be added as the roadmap develops.
