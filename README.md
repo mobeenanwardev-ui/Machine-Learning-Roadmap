@@ -65,4 +65,30 @@ Files:
 - [`README.md`](./04-Explainability-and-Causality/README.md) — concepts, code snippets, interpretation, and recorded exercise outputs.
 - [`titanic_explainability.py`](./04-Explainability-and-Causality/titanic_explainability.py) — executable Python version.
 
+### 5. [Large Language Models and RAG](./05-LLMs-and-RAG/)
+
+- Generative AI intuition
+- Text as sequence data and why context matters
+- Tokenization and self-supervised next-token prediction
+- LLM output probabilities and vocabulary size
+- Autoregressive text generation
+- Greedy decoding and temperature-based sampling
+- LLM versus complete chatbot applications
+- LLM limitations and hallucination
+- Retrieval-Augmented Generation (RAG)
+- RAG versus fine-tuning
+- Document chunking and metadata
+- Sentence embeddings
+- Vector databases and semantic search
+- Cosine similarity and other distance metrics
+- Pinecone retrieval
+- Prompt augmentation
+- Local Llama generation with Ollama
+- Complete RAG workflow with recorded course-exercise outputs
+
+Files:
+
+- [`README.md`](./05-LLMs-and-RAG/README.md) — LLM theory, RAG concepts, practical workflow, outputs, and exam cheat sheet.
+- [`rag_pipeline.py`](./05-LLMs-and-RAG/rag_pipeline.py) — executable open-source RAG pipeline based on the course exercise.
+
 More practical notebooks, Python scripts, visualizations, and machine-learning topics will be added as the roadmap develops.
