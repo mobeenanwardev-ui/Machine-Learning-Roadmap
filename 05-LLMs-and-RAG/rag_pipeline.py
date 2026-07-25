@@ -188,10 +188,11 @@ def retrieve_context(
         include_metadata=True,
     )
 
+    # This mirrors the course notebook: the vector search finds the records,
+    # then we recover the original human-readable chunk from metadata.
     contexts = [
         match["metadata"]["text"]
         for match in results["matches"]
-        if match.get("metadata") and match["metadata"].get("text")
     ]
 
     return "\n\n".join(contexts)
