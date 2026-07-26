@@ -1,8 +1,25 @@
 # Machine Learning Roadmap
 
-A structured learning repository covering machine learning concepts from theory to practical implementation.
+A beginner-friendly learning repository that explains machine learning from **normal human intuition to practical Python code**.
 
-The goal of this repository is to document not only how techniques are used, but why they exist, what problems they solve, when they fail, and how they are applied in real-world projects.
+The goal is to make the material useful for two kinds of readers:
+
+1. someone with little or no machine-learning background who wants to understand what the ideas actually mean;
+2. a technical reviewer or employer who wants to see the concepts, workflows, code, and interpretation I have learned and practised.
+
+This repository therefore tries to answer four questions for every topic:
+
+```text
+What problem are we solving?
+        ↓
+Why does this method exist?
+        ↓
+How does it work in normal language?
+        ↓
+How do we implement and interpret it in code?
+```
+
+The emphasis is not only on **how** an algorithm is used, but also **why it exists, when it is useful, what can go wrong, and how its output should be interpreted**.
 
 ## Current learning areas
 
@@ -41,7 +58,7 @@ The goal of this repository is to document not only how techniques are used, but
 - ROC Curve and AUC
 - Decision-threshold comparison
 
-This section contains two executable Python versions:
+Files:
 
 - [`titanic_decision_tree_beginner.py`](./03-Decision-Tree-Classification-and-Model-Evaluation/titanic_decision_tree_beginner.py) — simple, top-to-bottom beginner version with direct explanations and manual metric calculations.
 - [`titanic_decision_tree_pipeline.py`](./03-Decision-Tree-Classification-and-Model-Evaluation/titanic_decision_tree_pipeline.py) — more structured and advanced version using reusable functions.
@@ -93,23 +110,43 @@ Files:
 
 ### 6. [Linear Regression](./06-Linear-Regression/)
 
-- Linear Regression intuition and model equation
+- Continuous-value prediction explained with everyday examples
 - Features, target, weights, and bias
 - Model fitting and Linear Regression assumptions
 - Loss versus cost / objective functions
-- Mean Squared Error and the quadratic cost surface
+- Mean Squared Error
 - Gradient and Gradient Descent using a human hill/valley analogy
 - Learning rate and convergence
 - Multiple parameters, partial derivatives, and chain-rule intuition
 - Convex versus non-convex optimization
 - Polynomial Regression
 - Ridge, Lasso, and Elastic Net regularization
+- R², MSE, coefficients, scaling, and GridSearchCV
 - Scikit-learn and from-scratch Gradient Descent examples
-- Exam-style questions and a compact revision cheat sheet
 
 Files:
 
-- [`README.md`](./06-Linear-Regression/README.md) — concept-first Linear Regression and Gradient Descent study guide designed for fast exam revision.
+- [`README.md`](./06-Linear-Regression/README.md) — concept-first Linear Regression and Gradient Descent guide.
+- [`linear_regression.py`](./06-Linear-Regression/linear_regression.py) — self-contained building-energy regression example with scaling, evaluation, Lasso, and GridSearchCV.
+
+### 7. [Clustering](./07-Clustering/)
+
+- Clustering versus classification
+- Unsupervised learning intuition
+- K-Means step by step
+- Centroids and Euclidean distance
+- Random initialisation and local optima
+- WCSS / inertia
+- Elbow Method
+- Gap Statistic
+- K-Means limitations
+- Silhouette Score
+- Cluster profiling and interpretation
+
+Files:
+
+- [`README.md`](./07-Clustering/README.md) — clustering explained from everyday intuition to K-Means terminology and limitations.
+- [`customer_segmentation_kmeans.py`](./07-Clustering/customer_segmentation_kmeans.py) — self-contained customer-segmentation example with scaling, Elbow Method, K-Means, Silhouette Score, and cluster profiling.
 
 ### 8. [Logistic Regression](./08-Logistic-Regression/)
 
@@ -126,11 +163,53 @@ Files:
 - Logistic Regression limitations and linear decision boundaries
 - Bridge from Logistic Regression to Neural Networks
 - Scikit-learn and from-scratch implementations
-- Exam-style questions and a compact revision cheat sheet
 
 Files:
 
-- [`README.md`](./08-Logistic-Regression/README.md) — concept-first Logistic Regression revision guide.
+- [`README.md`](./08-Logistic-Regression/README.md) — concept-first Logistic Regression guide.
 - [`logistic_regression.py`](./08-Logistic-Regression/logistic_regression.py) — executable scikit-learn and from-scratch examples.
 
-More practical notebooks, Python scripts, visualizations, and machine-learning topics will be added as the roadmap develops.
+### 9. [Neural Networks](./09-Neural-Networks/)
+
+- Artificial neuron explained as weighted evidence
+- Weights, bias, and activation functions
+- Hidden layers and hierarchical feature learning
+- ReLU, Sigmoid, and Softmax
+- Forward propagation
+- Loss functions
+- Backpropagation and the chain rule
+- Gradient Descent and learning rate
+- Batch, stochastic, and mini-batch training
+- Adam optimizer
+- Epochs and batch size
+- Input normalisation
+- Overfitting, dropout, and early stopping
+- Vanishing and exploding gradients
+- Saddle points and optimisation difficulty
+- Complete neural-network training workflow
+
+Files:
+
+- [`README.md`](./09-Neural-Networks/README.md) — neural networks explained from normal-human intuition to training mechanics.
+- [`neural_network_cifar10.py`](./09-Neural-Networks/neural_network_cifar10.py) — CIFAR-10 multiclass image-classification example with training curves, evaluation, and learning-rate comparison.
+
+---
+
+## Repository philosophy
+
+The roadmap is intentionally written as a learning record rather than a collection of unexplained code snippets.
+
+A reader should be able to enter a topic folder and understand:
+
+```text
+problem
+→ intuition
+→ terminology
+→ mathematics
+→ code
+→ output
+→ interpretation
+→ limitations
+```
+
+More practical examples, visualisations, and machine-learning topics will be added as the roadmap develops.
