@@ -111,4 +111,26 @@ Files:
 
 - [`README.md`](./06-Linear-Regression/README.md) — concept-first Linear Regression and Gradient Descent study guide designed for fast exam revision.
 
+### 8. [Logistic Regression](./08-Logistic-Regression/)
+
+- Why Logistic Regression is used for classification
+- Linear score `z = w^T x + b`
+- Sigmoid function and probability interpretation
+- Decision thresholds
+- Binary Cross-Entropy / log loss
+- Gradient Descent and chain-rule intuition
+- Connection to backpropagation
+- One-vs-Rest multiclass classification
+- Softmax and multiclass probabilities
+- Sigmoid versus Softmax
+- Logistic Regression limitations and linear decision boundaries
+- Bridge from Logistic Regression to Neural Networks
+- Scikit-learn and from-scratch implementations
+- Exam-style questions and a compact revision cheat sheet
+
+Files:
+
+- [`README.md`](./08-Logistic-Regression/README.md) — concept-first Logistic Regression revision guide.
+- [`logistic_regression.py`](./08-Logistic-Regression/logistic_regression.py) — executable scikit-learn and from-scratch examples.
+
 More practical notebooks, Python scripts, visualizations, and machine-learning topics will be added as the roadmap develops.
