@@ -1,6 +1,6 @@
 # Neural Networks
 
-This section explains neural networks from a **normal-human starting point**.
+This section explains neural networks .
 
 The goal is not to begin with intimidating matrix notation. The goal is to understand what the network is trying to do, why hidden layers exist, how learning happens, and how the code connects to the theory.
 
@@ -792,7 +792,7 @@ Normalisation
 
 ---
 
-# Final human explanation
+# Final Explanation
 
 A neural network is not magic.
 
