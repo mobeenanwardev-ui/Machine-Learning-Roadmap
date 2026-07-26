@@ -627,7 +627,7 @@ Main K-Means problems
 
 ---
 
-# Final human explanation
+# Final Explanation
 
 Imagine entering a room full of people you have never met.
 
